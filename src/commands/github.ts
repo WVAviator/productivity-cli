@@ -1,8 +1,13 @@
 import navigate from '../utils/navigate';
-import Config from '../../cli-config.json';
+import { ConfigUtils } from '../utils/config';
 
 export const gotoGithubRepo = (repoArgs: string[]) => {
-  let url = `https://github.com/${Config.githubHandle}/`;
+
+  const config = ConfigUtils.getConfig();
+
+  if (!config.githubHandle) return console.log('Please run \'pconfig set githubHandle <handle>\' before running this command.');
+
+  let url = `https://github.com/${config.githubHandle}/`;
 
   if (repoArgs.length) {
     url += repoArgs[0];
